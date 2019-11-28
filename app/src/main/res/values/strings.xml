@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Météo</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="error_owm_connexion">Erreur de connexion à OpenWeatherMap</string>
+    <string name="error_internet_connexion">Aucune connexion internet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
