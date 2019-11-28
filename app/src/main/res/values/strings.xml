@@ -3,6 +3,7 @@
     <string name="action_settings">Paramètres</string>
     <string name="error_owm_connexion">Erreur de connexion à OpenWeatherMap</string>
     <string name="error_internet_connexion">Aucune connexion internet</string>
+    <string name="error_owm_json">Impossible de récupérer le JSON d\'OpenWeatherMap</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
