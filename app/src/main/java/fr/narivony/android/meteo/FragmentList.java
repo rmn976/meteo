@@ -1,6 +1,7 @@
 package fr.narivony.android.meteo;
 
 
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -56,10 +57,10 @@ public class FragmentList extends Fragment {
         return view;
     }
 
-    private class AsyncTaskMeteo extends AsyncTask<String, Void, String> {
+    private class AsyncTaskMeteo extends AsyncTask<String, Void, ArrayList<Observation>> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected ArrayList<Observation> doInBackground(String... strings) {
             //Tenter de récupérer le JSON retourné par OWM
             InputStream is;
             try {
@@ -74,19 +75,28 @@ public class FragmentList extends Fragment {
                 sbJSON.append(sc.nextLine());
             }
             sc.close();
-            return sbJSON.toString();
+            ArrayList<Observation> observationsList;
+            try {
+                observationsList = new OWM().JSON2liste(sbJSON.toString());
+            } catch (JSONException e) {
+                Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_owm_json, Snackbar.LENGTH_LONG).show();
+                return null;
+            }
+            for (Observation observation : observationsList) {
+                InputStream isImage;
+                try {
+                    isImage = new URL(observation.urlIcon).openStream();
+                    observation.icon = BitmapFactory.decodeStream(isImage);
+                } catch (IOException e) {
+                    Log.e("Icone", getString(R.string.error_icon_not_found));
+                }
+            }
+            return observationsList;
         }
 
         @Override
-        protected void onPostExecute(String strJSON) {
-            ArrayList<Observation> list;
-            try {
-                list = new OWM().JSON2liste(strJSON);
-            } catch (JSONException e) {
-                Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_owm_json, Snackbar.LENGTH_LONG).show();
-                return;
-            }
-            Log.d("Liste", list.toString());
+        protected void onPostExecute(ArrayList<Observation> list) {
+
         }
     }
 
