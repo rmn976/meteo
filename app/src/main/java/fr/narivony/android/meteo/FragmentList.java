@@ -26,6 +26,7 @@ import java.util.Scanner;
 
 public class FragmentList extends Fragment {
 
+    private ObservationAdapter adapter;
 
     public FragmentList() {
         // Required empty public constructor
@@ -33,17 +34,17 @@ public class FragmentList extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflater le layout du fragment de la liste
         // Ne pas l'attacher au ViewGroup pour permettre les transactions par programmation
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-
         // Récupérer le composant ListView depuis le layout
         ListView lv = view.findViewById(R.id.list);
-        // Créer un adapteur de string
-        ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), R.layout.item);
-        // Associer l'adapter à la liste
+        // Create the adapter to convert the array to views
+        adapter = new ObservationAdapter(getContext(), R.layout.item);
+        // Attach the adapter to a ListView
+
         lv.setAdapter(adapter);
 
         //Si connexion internet, alors se connecter à OWM
@@ -52,7 +53,6 @@ public class FragmentList extends Fragment {
         } else {
             Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_internet_connexion, Snackbar.LENGTH_LONG).show();
         }
-
 
         return view;
     }
@@ -96,7 +96,10 @@ public class FragmentList extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Observation> list) {
-
+            if (list != null) {
+                adapter.clear();
+                adapter.addAll(list);
+            }
         }
     }
 

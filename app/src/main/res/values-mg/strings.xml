@@ -5,4 +5,5 @@
     <string name="error_owm_connexion">Tsy afaka mahita OpenWeatherMap</string>
     <string name="error_internet_connexion">Tsy madeha ny internet</string>
     <string name="error_owm_json">Tsy afaka raiso le JSON an\'i OpenWeatherMap</string>
+    <string name="error_icon_not_found">Tsy mahita an\'le sary</string>
 </resources>

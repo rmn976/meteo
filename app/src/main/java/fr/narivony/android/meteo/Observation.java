@@ -1,5 +1,7 @@
 package fr.narivony.android.meteo;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 public class Observation {
@@ -9,6 +11,7 @@ public class Observation {
     protected int max;
     protected String description;
     protected String urlIcon;
+    protected transient Bitmap icon;
 
     public void Observation() {
     }
