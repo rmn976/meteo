@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -28,4 +32,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    def lifecycle_version = "2.2.0-rc02"
+    // ViewModel et LiveData.
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    // AnnotationProcessor pour Android Studio.
+    annotationProcessor "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
 }

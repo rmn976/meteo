@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
-public class Observation {
+import java.io.Serializable;
+
+public class Observation implements Serializable {
 
     protected String city;
     protected int min;
