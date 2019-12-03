@@ -1,37 +1,29 @@
 package fr.narivony.android.meteo;
 
 
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Scanner;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class FragmentList extends Fragment {
 
-    private ObservationAdapter adapter;
+    private ViewModelMeteo vmMeteo;
 
     public FragmentList() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmMeteo = new ViewModelProvider(requireActivity()).get(ViewModelMeteo.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,65 +34,20 @@ public class FragmentList extends Fragment {
         // Récupérer le composant ListView depuis le layout
         ListView lv = view.findViewById(R.id.list);
         // Create the adapter to convert the array to views
-        adapter = new ObservationAdapter(getContext(), R.layout.item);
-        // Attach the adapter to a ListView
-
+        ObservationAdapter adapter = new ObservationAdapter(getContext(), R.layout.item);
+        // Associer l'adapter à la liste
         lv.setAdapter(adapter);
 
-        //Si connexion internet, alors se connecter à OWM
-        if (Util.isConnected(getContext())) {
-            new AsyncTaskMeteo().execute(new OWM().getURL());
-        } else {
-            Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_internet_connexion, Snackbar.LENGTH_LONG).show();
-        }
+        // Ecouter vmMeteo pour les observations
+        // A chaque changement de viewModelMeteo, cela se répercute ici (pas de rechargement car sauvegardé). Ceci est comme un écouteur
+        vmMeteo.getObservations().observe(getViewLifecycleOwner(), observations -> {
+            // Purger l'adapter
+            adapter.clear();
+            // Peupler l'adapter
+            adapter.addAll(observations);
+        });
 
+        // Retourner le composant ListView
         return view;
     }
-
-    private class AsyncTaskMeteo extends AsyncTask<String, Void, ArrayList<Observation>> {
-
-        @Override
-        protected ArrayList<Observation> doInBackground(String... strings) {
-            //Tenter de récupérer le JSON retourné par OWM
-            InputStream is;
-            try {
-                is = new URL(strings[0]).openStream();
-            } catch (IOException e) {
-                Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_owm_connexion, Snackbar.LENGTH_LONG).show();
-                return null;
-            }
-            Scanner sc = new Scanner(is);
-            StringBuilder sbJSON = new StringBuilder(10000);
-            while (sc.hasNextLine()) {
-                sbJSON.append(sc.nextLine());
-            }
-            sc.close();
-            ArrayList<Observation> observationsList;
-            try {
-                observationsList = new OWM().JSON2liste(sbJSON.toString());
-            } catch (JSONException e) {
-                Snackbar.make(getActivity().findViewById(R.id.content), R.string.error_owm_json, Snackbar.LENGTH_LONG).show();
-                return null;
-            }
-            for (Observation observation : observationsList) {
-                InputStream isImage;
-                try {
-                    isImage = new URL(observation.urlIcon).openStream();
-                    observation.icon = BitmapFactory.decodeStream(isImage);
-                } catch (IOException e) {
-                    Log.e("Icone", getString(R.string.error_icon_not_found));
-                }
-            }
-            return observationsList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Observation> list) {
-            if (list != null) {
-                adapter.clear();
-                adapter.addAll(list);
-            }
-        }
-    }
-
 }

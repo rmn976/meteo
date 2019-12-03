@@ -2,7 +2,10 @@
   <dictionary name="Kiandry">
     <words>
       <w>contenu</w>
+      <w>définir</w>
+      <w>initialiser</w>
       <w>meteo</w>
+      <w>récupérer</w>
     </words>
   </dictionary>
 </component>

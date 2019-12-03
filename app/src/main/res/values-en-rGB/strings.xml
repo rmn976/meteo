@@ -6,4 +6,5 @@
     <string name="error_internet_connexion">No internet connexion</string>
     <string name="error_owm_json">Unable to retrive OpenWeatherMap JSON</string>
     <string name="error_icon_not_found">Icon not found</string>
+    <string name="loading_observation_content">Loading observations</string>
 </resources>
