@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Objects;
+
 public class FragmentList extends Fragment {
 
     private ViewModelMeteo vmMeteo;
@@ -34,7 +36,7 @@ public class FragmentList extends Fragment {
         // Récupérer le composant ListView depuis le layout
         ListView lv = view.findViewById(R.id.list);
         // Create the adapter to convert the array to views
-        ObservationAdapter adapter = new ObservationAdapter(getContext(), R.layout.item);
+        ObservationAdapter adapter = new ObservationAdapter(Objects.requireNonNull(getContext()), R.layout.item);
         // Associer l'adapter à la liste
         lv.setAdapter(adapter);
 
