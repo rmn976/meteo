@@ -5,9 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 
-public final class Util {
+final class Util {
 
-    public static Boolean isConnected(Context context) {
+    static Boolean isConnected(Context context) {
         //Vérifier la connexion internet
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {

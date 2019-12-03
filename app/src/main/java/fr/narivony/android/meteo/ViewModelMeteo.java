@@ -1,5 +1,6 @@
 package fr.narivony.android.meteo;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -32,11 +33,11 @@ public class ViewModelMeteo extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<String> getState() {
+    LiveData<String> getState() {
         return state;
     }
 
-    public LiveData<ArrayList<Observation>> getObservations() {
+    LiveData<ArrayList<Observation>> getObservations() {
 
         if (mldObservationsList == null) {
             mldObservationsList = new MutableLiveData<>();
@@ -57,6 +58,7 @@ public class ViewModelMeteo extends AndroidViewModel {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskMeteo extends AsyncTask<String, Void, ArrayList<Observation>> {
 
         @Override

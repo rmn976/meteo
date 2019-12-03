@@ -12,14 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
 public class ObservationAdapter extends ArrayAdapter<Observation> {
 
-    int layoutResourceId;
+    private int layoutResourceId;
 
 
-    public ObservationAdapter(@NonNull Context context, int resource) {
+    ObservationAdapter(@NonNull Context context, int resource) {
         super(context, resource);
 
         // Stocker le layout
@@ -43,9 +41,17 @@ public class ObservationAdapter extends ArrayAdapter<Observation> {
         // Définir l'icône
         ImageView icon = convertView.findViewById(R.id.item_icon);
         TextView text = convertView.findViewById(R.id.item_text);
+        TextView itemDescription = convertView.findViewById(R.id.item_description);
         // Populate the data into the template view using the data object
+        assert observation != null;
         icon.setImageBitmap(observation.icon);
         text.setText(observation.toString());
+
+
+
+        if (itemDescription != null) {
+            itemDescription.setText(getContext().getString(R.string.description, observation.description));
+        }
         // Return the completed view to render on screen
         return convertView;
     }

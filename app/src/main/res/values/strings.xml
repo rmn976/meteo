@@ -6,6 +6,7 @@
     <string name="error_owm_json">Impossible de récupérer le JSON d\'OpenWeatherMap</string>
     <string name="error_icon_not_found">Icône introuvable</string>
     <string name="loading_observation_content">Chargement des observations en cours</string>
+    <string name="description" translatable="false">(%1$s)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

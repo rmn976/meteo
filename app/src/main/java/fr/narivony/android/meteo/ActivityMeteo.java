@@ -29,13 +29,26 @@ public class ActivityMeteo extends AppCompatActivity {
         ViewModelMeteo vmMeteo = new ViewModelProvider(this).get(ViewModelMeteo.class);
         // On observe le state de ViewModelMeteo
         vmMeteo.getState().observe(this, state -> {
+            switch (state) {
+                case ViewModelMeteo.NO_INTERNET_CONNECTION:
+                    Snackbar.make(findViewById(R.id.content), R.string.error_internet_connexion, Snackbar.LENGTH_LONG).show();
+                    break;
+                case ViewModelMeteo.LOADING_ON:
+                    wait.show();
+                    break;
+                case ViewModelMeteo.LOADING_OFF:
+                    wait.dismiss();
+                    break;
+            }
+            /*
+            Le switch est équivalent au if suivant
             if (state.equals(ViewModelMeteo.NO_INTERNET_CONNECTION)) {
                 Snackbar.make(findViewById(R.id.content), R.string.error_internet_connexion, Snackbar.LENGTH_LONG).show();
             } else if (state.equals(ViewModelMeteo.LOADING_ON)) {
                 wait.show();
             } else if (state.equals(ViewModelMeteo.LOADING_OFF)) {
                 wait.dismiss();
-            }
+            }*/
         });
 
         // Charger une instance de FragmentList

@@ -15,7 +15,7 @@ public class Observation implements Serializable {
     String urlIcon;
     transient Bitmap icon;
 
-    public void Observation() {
+    Observation() {
     }
 
     @NonNull
