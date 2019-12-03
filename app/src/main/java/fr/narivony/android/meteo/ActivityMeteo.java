@@ -29,11 +29,11 @@ public class ActivityMeteo extends AppCompatActivity {
         ViewModelMeteo vmMeteo = new ViewModelProvider(this).get(ViewModelMeteo.class);
         // On observe le state de ViewModelMeteo
         vmMeteo.getState().observe(this, state -> {
-            if (state == ViewModelMeteo.NO_INTERNET_CONNECTION) {
+            if (state.equals(ViewModelMeteo.NO_INTERNET_CONNECTION)) {
                 Snackbar.make(findViewById(R.id.content), R.string.error_internet_connexion, Snackbar.LENGTH_LONG).show();
-            } else if (state == ViewModelMeteo.LOADING_ON) {
+            } else if (state.equals(ViewModelMeteo.LOADING_ON)) {
                 wait.show();
-            } else if (state == ViewModelMeteo.LOADING_OFF) {
+            } else if (state.equals(ViewModelMeteo.LOADING_OFF)) {
                 wait.dismiss();
             }
         });
