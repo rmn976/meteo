@@ -20,9 +20,9 @@ import java.util.Scanner;
 
 public class ViewModelMeteo extends AndroidViewModel {
 
-    public final static String NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION";
-    public final static String LOADING_ON = "LOADING_ON";
-    public final static String LOADING_OFF = "LOADING_OFF";
+    final static String NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION";
+    final static String LOADING_ON = "LOADING_ON";
+    final static String LOADING_OFF = "LOADING_OFF";
     private MutableLiveData<ArrayList<Observation>> mldObservationsList;
     private MutableLiveData<String> state = new MutableLiveData<>();
     private Application application;

@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 public class Observation implements Serializable {
 
-    protected String city;
-    protected int min;
-    protected int max;
-    protected String description;
-    protected String urlIcon;
-    protected transient Bitmap icon;
+    String city;
+    int min;
+    int max;
+    String description;
+    String urlIcon;
+    transient Bitmap icon;
 
     public void Observation() {
     }
