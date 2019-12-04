@@ -26,6 +26,7 @@ public class ViewModelMeteo extends AndroidViewModel {
     final static String LOADING_OFF = "LOADING_OFF";
     private MutableLiveData<ArrayList<Observation>> mldObservationsList;
     private MutableLiveData<String> state = new MutableLiveData<>();
+    private MutableLiveData<Integer> position = new MutableLiveData<>();
     private Application application;
 
     public ViewModelMeteo(@NonNull Application application) {
@@ -37,10 +38,20 @@ public class ViewModelMeteo extends AndroidViewModel {
         return state;
     }
 
-    LiveData<ArrayList<Observation>> getObservations() {
+    LiveData<Integer> getPosition() {
+        return position;
+    }
+
+    void setPosition(int position) {
+        this.position.setValue(position);
+    }
+
+    LiveData<ArrayList<Observation>> getObservations(boolean forceReload) {
 
         if (mldObservationsList == null) {
             mldObservationsList = new MutableLiveData<>();
+            loadObservations();
+        } else if(forceReload) {
             loadObservations();
         }
 

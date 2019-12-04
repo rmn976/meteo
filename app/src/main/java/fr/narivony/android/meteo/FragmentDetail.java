@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class FragmentDetail extends Fragment {
+
     private Observation observation;
 
     public FragmentDetail() {
