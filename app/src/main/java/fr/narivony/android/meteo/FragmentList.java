@@ -3,10 +3,14 @@ package fr.narivony.android.meteo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,7 +28,29 @@ public class FragmentList extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Indiquer que ce fragment a des options de menu
+        setHasOptionsMenu(true);
+
+        // Récupérer une instance de ViewModelMeteo
         vmMeteo = new ViewModelProvider(requireActivity()).get(ViewModelMeteo.class);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        // Inflater le layout du menu
+        inflater.inflate(R.menu.menu_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Si clic sur "Actualiser", actualiser
+        if (item.getItemId() == R.id.action_refresh) {
+            vmMeteo.getObservations(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -42,7 +68,7 @@ public class FragmentList extends Fragment {
 
         // Ecouter vmMeteo pour les observations
         // A chaque changement de viewModelMeteo, cela se répercute ici (pas de rechargement car sauvegardé). Ceci est comme un écouteur
-        vmMeteo.getObservations().observe(getViewLifecycleOwner(), observations -> {
+        vmMeteo.getObservations(false).observe(getViewLifecycleOwner(), observations -> {
             // Purger l'adapter
             adapter.clear();
             // Peupler l'adapter

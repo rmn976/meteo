@@ -7,4 +7,5 @@
     <string name="error_owm_json">Tsy afaka raiso le JSON an\'i OpenWeatherMap</string>
     <string name="error_icon_not_found">Tsy mahita an\'le sary</string>
     <string name="loading_observation_content">Miandry observations</string>
+    <string name="action_refresh">Actualiser</string>
 </resources>
