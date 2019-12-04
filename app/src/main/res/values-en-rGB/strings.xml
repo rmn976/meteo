@@ -7,4 +7,5 @@
     <string name="error_owm_json">Unable to retrive OpenWeatherMap JSON</string>
     <string name="error_icon_not_found">Icon not found</string>
     <string name="loading_observation_content">Loading observations</string>
+    <string name="action_refresh">Refresh</string>
 </resources>
